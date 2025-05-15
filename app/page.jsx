@@ -9,7 +9,6 @@ export default async function Home() {
       const movies = JSON.parse(JSON.stringify(res));
       return movies;
     } catch (error) {
-      console.log(error);
     }
   }
   const movies = await getMovies()

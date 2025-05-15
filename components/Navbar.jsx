@@ -6,7 +6,6 @@ import { signOut } from "next-auth/react";
 
 export default function Navbar() {
   const { data: session } = useSession();
-  console.log(session)
   const userAuthenticated = session?.user
   return (
     <header className="relative bg-gradient-to-r from-indigo-950 to-violet-950 text-white shadow-lg py-4">

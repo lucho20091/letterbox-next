@@ -46,8 +46,7 @@ export default function RewiewForm({movieSlug}){
             await response.json()
             toast.success("Review created successfully")
             router.refresh()
-        } catch (error){
-            console.log(error)  
+        } catch (error){ 
             toast.error("Error creating review")
         }
     }

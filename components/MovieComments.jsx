@@ -26,7 +26,6 @@ export default function MovieComments({comments}){
             toast.success('Comment deleted successfully')
             router.refresh()
         } catch (error){
-            console.log(error)
             toast.error('Failed to delete comment')
         }
     }
