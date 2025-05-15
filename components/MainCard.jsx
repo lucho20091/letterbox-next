@@ -9,6 +9,10 @@ export default function MainCard({ movie, comments}) {
         }
       }
     
+    if (!movie){
+        return <div>Movie not found</div>
+    }
+    
     return (
         <div className="p-4 md:p-0 md:h-auto md:overflow-hidden rounded-lg shadow-lg md:shadow-lg md:bg-gradient-to-br from-indigo-950 to-violet-950
          mt-4 md:mt-8 max-w-screen-lg mx-auto">

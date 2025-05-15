@@ -5,8 +5,23 @@ import ButtonBack from '@/components/ButtonBack'
 import MainCard from '@/components/MainCard'
 import RewiewForm from '@/components/RewiewForm'
 import MovieComments from '@/components/MovieComments'
+
+export async function generateMetadata({params}){
+    try{
+        const {slug} = await params
+        const movie = await Movie.findOne({slug})
+        return {
+            title: `${movie.title} - LetterboxdMovies`
+        }
+    } catch (error){
+        return {
+            title: "Movie not found - LetterboxdMovies"
+        }
+    }
+}
 export default async function MoviePage({params}){
     const {slug} = await params
+
     async function getMovie(){
         try{
             await connectDB()
