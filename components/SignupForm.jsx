@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import Link from "next/link";
 export default function SignupForm() {
     const [formData, setFormData] = useState({
         username: "",
@@ -76,9 +76,13 @@ export default function SignupForm() {
                 </div>
                 <button 
                     type="submit" 
-                    className="rounded-md p-2 bg-violet-950 text-white cursor-pointer hover:bg-violet-950/80 transition-colors">Login</button>
+                    className="rounded-md p-2 bg-violet-950 text-white cursor-pointer hover:bg-violet-950/80 transition-colors">Login
+                </button>
+                <div className="flex justify-center items-center gap-2">
+                    <p className="text-gray-500">Already have an account?</p>
+                    <Link href="/login" className="text-blue-500 hover:text-blue-700">Login</Link>
+                </div>
             </form>
-            <ToastContainer />
         </div>
     )
 }

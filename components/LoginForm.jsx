@@ -1,8 +1,9 @@
 "use client"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 export default function LoginForm() {
     const [formData, setFormData] = useState({
         username: "",
@@ -33,7 +34,7 @@ export default function LoginForm() {
                 throw new Error(result.error);
             }
             
-            router.push("/dashboard");
+            router.push("/");
 
             toast.success("Login successful. Redirecting to home page...");
         } catch (error) {
@@ -77,9 +78,13 @@ export default function LoginForm() {
                 </div>
                 <button 
                     type="submit" 
-                    className="rounded-md p-2 bg-violet-950 text-white cursor-pointer hover:bg-violet-950/80 transition-colors">Login</button>
+                    className="rounded-md p-2 bg-violet-950 text-white cursor-pointer hover:bg-violet-950/80 transition-colors">Login
+                </button>
+                <div className="flex justify-center items-center gap-2">
+                    <p className="text-gray-500">Don't have an account?</p>
+                    <Link href="/signup" className="text-blue-500 hover:text-blue-700">Sign Up</Link>
+                </div>
             </form>
-            <ToastContainer />
         </div>
     )
 }

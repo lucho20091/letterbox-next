@@ -23,12 +23,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex flex-col h-dvh">
-        <Navbar />
         <AuthProvider>
-          {children}
+          <div className="flex flex-col h-dvh">
+            <Navbar />
+            {children}
+          </div>
         </AuthProvider>
-        </div>
       </body>
     </html>
   );

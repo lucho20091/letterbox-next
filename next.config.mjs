@@ -9,9 +9,20 @@ const nextConfig = {
         }
         return config;
       },
-    images: {
-        remotePatterns: [new URL('https://static-cdn.jtvnw.net/**')]
-    }
+      images: {
+        remotePatterns: [
+          {
+            protocol: 'https',
+            hostname: 'static-cdn.jtvnw.net',
+            pathname: '/**',
+          },
+          {
+            protocol: 'https',
+            hostname: 'a.ltrbxd.com',
+            pathname: '/**',
+          },
+        ],
+      }
 };
 
 export default nextConfig;
