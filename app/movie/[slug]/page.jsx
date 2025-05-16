@@ -52,9 +52,16 @@ export default async function MoviePage({params}){
                 <div className="container mx-auto p-4">
                     <div className="pt-0 md:pt-8">
                     <ButtonBack />
-                    <MainCard movie={movie} comments={comments} />
-                    <RewiewForm movieSlug={slug}/>
-                    <MovieComments comments={comments}/>
+                    {movie ? (
+                        <>
+                            <MainCard movie={movie} comments={comments} />
+                            <RewiewForm movieSlug={slug}/>
+                            <MovieComments comments={comments}/>
+                        </>
+                    ) : (
+                        <p className='text-center text-2xl mt-20'>Movie not found</p>
+                    )
+                    }
                     </div>
                 </div>
             </LoadingProvider>
