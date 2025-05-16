@@ -42,8 +42,12 @@ export default function RewiewForm({movieSlug}){
                 toast.error("You already left a review for this movie")
                 return
             }
+            if (response.status === 500){
+                toast.error("Please log in to leave a review")
+                return
+            }
             setFormData(prev => ({...prev, comment: ""}))
-            await response.json()
+            console.log(response)
             toast.success("Review created successfully")
             router.refresh()
         } catch (error){ 
