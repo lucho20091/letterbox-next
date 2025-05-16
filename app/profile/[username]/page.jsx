@@ -5,6 +5,8 @@ import User from "@/models/User"
 import Comment from "@/models/Comment"
 import Movie from "@/models/Movie"
 import MovieWatchList from "@/models/MovieWatchList"
+import ButtonBack from "@/components/ButtonBack"
+import { LoadingProvider } from "@/app/Providers"
 export default async function Profile({params}){
     const {username} = await params
 
@@ -48,12 +50,17 @@ export default async function Profile({params}){
 
     return(
         <div className="grow">
-            <div className="container mx-auto p-4">
-                <div className="pt-0 md:pt-8">
+            <LoadingProvider>
+                <div className="container mx-auto p-4">
+                    <div className="pt-0 md:pt-8">
+                        <div className="mb-4 md:mb-0">
+                        <ButtonBack />
+                    </div>
                     <ProfileData profile={profile} reviews={reviews} watchlist={watchlist}/>
                 </div>
-                <MoviesProfile profile={profile} reviews={reviews} watchlist={watchlist}/>
-            </div>
+                    <MoviesProfile profile={profile} reviews={reviews} watchlist={watchlist}/>
+                </div>
+            </LoadingProvider>
         </div>
     )
 }

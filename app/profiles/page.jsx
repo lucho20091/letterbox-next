@@ -1,6 +1,7 @@
 import ProfileCard from "@/components/ProfileCard"
 import connectDB from "@/libs/database"
 import User from "@/models/User"
+import { LoadingProvider } from "../Providers"
 export default async function Profiles() {
     async function getProfiles(){
         try{
@@ -14,8 +15,9 @@ export default async function Profiles() {
     const profiles = await getProfiles()
     return (
         <div className="grow">
-            <div className="container mx-auto p-4">
-                <div className="pt-0 md:pt-8">
+            <LoadingProvider>
+                <div className="container mx-auto p-4">
+                    <div className="pt-0 md:pt-8">
                     <h1 className="text-4xl font-bold mb-2">Profiles</h1>
                     <p className="text-gray-700">Discover profiles of users who have shared their movie ratings</p>
                 </div>
@@ -23,8 +25,9 @@ export default async function Profiles() {
                     {profiles.map((profile) => (
                         <ProfileCard key={profile._id} profile={profile} />
                     ))}
+                    </div>
                 </div>
-            </div>
+            </LoadingProvider>
         </div>
     )
 }

@@ -3,6 +3,7 @@ import MovieCard from "@/components/MovieCard"
 import connectDB from "@/libs/database"
 import MovieWatchList from "@/models/MovieWatchList"
 import User from "@/models/User"
+import { LoadingProvider } from "../Providers"
 
 export default async function Watchlist() {
     let usersWatchlist
@@ -41,8 +42,9 @@ export default async function Watchlist() {
 
     return (
         <div className='grow'>
-            <div className="container mx-auto p-4">
-                <div className="pt-0 md:pt-8">
+                <LoadingProvider>
+                <div className="container mx-auto p-4">
+                    <div className="pt-0 md:pt-8">
                     <h1 className="text-4xl font-bold mb-2">Watchlist</h1>
                     <p className="text-gray-700">Keep track of the movies you want to watch</p>
                 </div>
@@ -62,8 +64,9 @@ export default async function Watchlist() {
                             </div>
                         </div>
                     ))}
+                    </div>
                 </div>
+            </LoadingProvider>
             </div>
-        </div>
     )
 }

@@ -19,7 +19,7 @@ export default function ButtonBack(){
                             d="M10 19l-7-7m0 0l7-7m-7 7h18"
                         />
                         </svg>
-                        <span className="group-hover:font-semibold transition-all duration-300">Back to Movies</span>
+                        <span className="group-hover:font-semibold transition-all duration-300">Go Back</span>
         </button>
     )
 }

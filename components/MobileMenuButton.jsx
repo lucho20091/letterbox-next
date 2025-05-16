@@ -1,8 +1,11 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
 export default function MobileMenuButton() {
     const [isOpen, setIsOpen] = useState(false);
+    const { data: session } = useSession();
+    const userAuthenticated = session?.user
 
     function toggleMobileMenu(){
         setIsOpen(prev => !prev);
@@ -56,6 +59,31 @@ export default function MobileMenuButton() {
                                 Watchlist
                             </div>
                     </Link>
+                    {userAuthenticated ? (
+                        <>
+                            <Link
+                                href={`/profile/${userAuthenticated.username}`}
+                                className="block py-6 rounded-md text-sm font-medium hover:bg-indigo-800/40 transition-colors"
+                        >
+                            <div className="container px-4 mx-auto flex items-center gap-2">
+                                <img src={userAuthenticated.image} alt={userAuthenticated.username} className="w-8 h-8 rounded-full" />
+                                <span>{userAuthenticated.username}</span>
+                            </div>
+                        </Link>
+                        <button
+                            className="block w-full cursor-pointer py-6 rounded-md text-sm font-medium hover:bg-indigo-800/40 transition-colors"
+                            onClick={() => {
+                                if (confirm("Are you sure you want to logout?")){
+                                    signOut()
+                                }
+                            }}
+                            >
+                                <div className="container px-4 text-left">
+                                    Sign Out
+                                </div>
+                            </button>
+                        </>
+                    ) : (
                     <Link 
                         href="/login" 
                         onClick={toggleMobileMenu} 
@@ -64,6 +92,7 @@ export default function MobileMenuButton() {
                                 Login
                             </div>
                     </Link>
+                    )}
                 </nav>
             </div>
         </div>

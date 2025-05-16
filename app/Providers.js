@@ -2,8 +2,11 @@
 
 import { SessionProvider } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
+import Loading from "@/components/Loading";
+import { Suspense } from "react";
 
-export default function AuthProvider({children}){
+
+export function AuthProvider({children}){
     return(
         <SessionProvider>
             {children}
@@ -11,3 +14,11 @@ export default function AuthProvider({children}){
         </SessionProvider>
     )
 }
+
+export function LoadingProvider({children}){
+    return(
+        <Suspense fallback={<Loading />}>
+            {children}
+        </Suspense>
+    )
+}   

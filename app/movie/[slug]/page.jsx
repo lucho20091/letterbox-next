@@ -5,6 +5,7 @@ import ButtonBack from '@/components/ButtonBack'
 import MainCard from '@/components/MainCard'
 import RewiewForm from '@/components/RewiewForm'
 import MovieComments from '@/components/MovieComments'
+import { LoadingProvider } from '@/app/Providers'
 
 export async function generateMetadata({params}){
     try{
@@ -47,14 +48,16 @@ export default async function MoviePage({params}){
 
     return (
         <div className="grow">
-            <div className="container mx-auto p-4">
-                <div className="pt-0 md:pt-8">
+            <LoadingProvider>
+                <div className="container mx-auto p-4">
+                    <div className="pt-0 md:pt-8">
                     <ButtonBack />
                     <MainCard movie={movie} comments={comments} />
                     <RewiewForm movieSlug={slug}/>
                     <MovieComments comments={comments}/>
+                    </div>
                 </div>
-            </div>
+            </LoadingProvider>
         </div>
     )
 }
