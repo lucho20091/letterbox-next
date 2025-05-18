@@ -78,7 +78,7 @@ export default function MobileMenuButton() {
                                 }
                             }}
                             >
-                                <div className="container px-4 text-left">
+                                <div className="container px-4 mx-auto flex items-center gap-2">
                                     Sign Out
                                 </div>
                             </button>

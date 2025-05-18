@@ -28,15 +28,15 @@ export default function MovieCard({movie, isWatchlist, isSearch}){
                 method: 'DELETE',
                 body: JSON.stringify({username: userAuthenticated?.username})
             })
-            if (response.ok){
-                toast.success('Movie deleted from watchlist');
-                router.refresh()
-            } else {
-                toast.error('Failed to delete movie from watchlist');
+            const data = await response.json()
+            if (!response.ok){
+                toast.error(data.message || 'Failed to delete movie from watchlist');
+                return
             }
+            toast.success(data.message || 'Movie deleted from watchlist');
+            router.refresh()
         } catch (error) {
-            toast.error("Error deleting movie from watchlist");
-            console.error("Error deleting movie from watchlist", error);
+            toast.error("Network error. Please try again.")
         }
     }
 
@@ -54,15 +54,15 @@ export default function MovieCard({movie, isWatchlist, isSearch}){
                     title: movie.Title
                 })
             })
-            if (response.ok){
-                toast.success('Movie added to watchlist');
-            } else {
-                toast.error('Failed to add movie to watchlist');
+            const data = await response.json()
+            if (!response.ok){
+                toast.error(data.message || 'Failed to add movie to watchlist');
+                return
             }
+            toast.success(data.message || 'Movie added to watchlist');
             router.refresh()
         } catch (error) {
-            console.error("Error adding movie to watchlist", error);
-            toast.error("Error adding movie to watchlist");
+            toast.error('Network error. Please try again.')
         }
     }
 

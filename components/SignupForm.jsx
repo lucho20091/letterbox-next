@@ -2,14 +2,14 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 export default function SignupForm() {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
     });
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-
+    const router = useRouter();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -17,26 +17,29 @@ export default function SignupForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!formData.username || !formData.password){
+            toast.error("Please provide both username and password");
+            return;
+        }
         setLoading(true);
-        setError(null);
-
         try {
             const response = await fetch("api/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
-                credentials: "include"
+                body: JSON.stringify(formData)
             });
-
+            const data = await response.json();
             if (!response.ok) {
-                throw new Error("Login failed");
+                toast.error(data.message || "Signup failed");
+                return;
             }
-            
-            toast.success("Signup successful. Redirecting to home page...");
+            toast.success(data.message || "Registration successful!");
+            setFormData({ username: "", password: "" });
+            router.push("/login");
         } catch (error) {
-            toast.error("Username already exists");
+            toast.error("Network error. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -76,7 +79,8 @@ export default function SignupForm() {
                 </div>
                 <button 
                     type="submit" 
-                    className="rounded-md p-2 bg-violet-950 text-white cursor-pointer hover:bg-violet-950/80 transition-colors">Login
+                    className="rounded-md p-2 bg-violet-950 text-white cursor-pointer hover:bg-violet-950/80 transition-colors">
+                    {loading ? "Signing up..." : "Sign Up"}
                 </button>
                 <div className="flex justify-center items-center gap-2">
                     <p className="text-gray-500">Already have an account?</p>

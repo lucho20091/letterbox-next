@@ -3,6 +3,7 @@ import User from "@/models/User";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+import ratelimit from "@/libs/ratelimiter";
 
 export const authOptions = {
   providers: [
@@ -10,7 +11,14 @@ export const authOptions = {
       name: "credentials",
       credentials: {},
 
-      async authorize(credentials) {
+      async authorize(credentials, request) {
+        const ip = request.headers["x-forwarded-for"];
+        console.log("IP: ", ip);
+        const { limit, reset, remaining } = await ratelimit.limit(ip);
+        console.log(remaining)
+        if (remaining === 0){
+          return null;
+        }
         const { username, password } = credentials;
 
         try {

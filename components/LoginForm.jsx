@@ -10,7 +10,6 @@ export default function LoginForm() {
         password: "",
     });
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const router = useRouter();
 
     const handleChange = (e) => {
@@ -21,22 +20,21 @@ export default function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
 
         try {
-            const result = await signIn("credentials", {
+            const response = await signIn("credentials", {
                 username: formData.username,
                 password: formData.password,
                 redirect: false,
             });
             
-            if(result.error){
-                throw new Error(result.error);
+            if(response.error){
+                throw new Error(response.error);
             }
-            
+
             router.push("/");
 
-            toast.success("Login successful. Redirecting to home page...");
+            toast.success("Login successful");
         } catch (error) {
             toast.error("Username or password is incorrect");
         } finally {
@@ -78,7 +76,9 @@ export default function LoginForm() {
                 </div>
                 <button 
                     type="submit" 
-                    className="rounded-md p-2 bg-violet-950 text-white cursor-pointer hover:bg-violet-950/80 transition-colors">Login
+                    className="rounded-md p-2 bg-violet-950 text-white cursor-pointer hover:bg-violet-950/80 transition-colors">{
+                        loading ? "Logging in..." : "Login"
+                    }
                 </button>
                 <div className="flex justify-center items-center gap-2">
                     <p className="text-gray-500">Don't have an account?</p>

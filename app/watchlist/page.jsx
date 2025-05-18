@@ -5,37 +5,39 @@ import MovieWatchList from "@/models/MovieWatchList"
 import User from "@/models/User"
 import { LoadingProvider } from "../Providers"
 
+async function fetchWatchlist(){
+    try{
+        await connectDB()
+        const watchlist = await MovieWatchList.find()
+        const data = await Promise.all(watchlist.map(async (movie) => {
+            const userImage = await get_User(movie.username);
+            return { ...movie.toObject(), userImage: userImage.image };
+        }));
+        const dataByUsername = data.reduce((acc, movie) => {
+            acc[movie.username] = acc[movie.username] || [];
+            acc[movie.username].push(movie);
+            return acc;
+        }, {});
+        return JSON.parse(JSON.stringify(dataByUsername))
+    } catch(error){
+        console.error("Error fetching watchlist", error)
+    }
+}
+
+async function get_User(username){
+    try{
+        await connectDB()
+        const user = await User.findOne({username}).select("username image")
+        return user
+    } catch(error){
+        console.error("Error fetching user", error)
+    }
+}
+
 export default async function Watchlist() {
     let usersWatchlist
 
-    async function fetchWatchlist(){
-        try{
-            await connectDB()
-            const watchlist = await MovieWatchList.find()
-            const data = await Promise.all(watchlist.map(async (movie) => {
-                const userImage = await get_User(movie.username);
-                return { ...movie.toObject(), userImage: userImage.image };
-            }));
-            const dataByUsername = data.reduce((acc, movie) => {
-                acc[movie.username] = acc[movie.username] || [];
-                acc[movie.username].push(movie);
-                return acc;
-            }, {});
-            return JSON.parse(JSON.stringify(dataByUsername))
-        } catch(error){
-            console.error("Error fetching watchlist", error)
-        }
-    }
 
-    async function get_User(username){
-        try{
-            await connectDB()
-            const user = await User.findOne({username}).select("username image")
-            return user
-        } catch(error){
-            console.error("Error fetching user", error)
-        }
-    }
     const watchlist = await fetchWatchlist()
     usersWatchlist = Object.keys(watchlist)
 
