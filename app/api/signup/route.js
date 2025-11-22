@@ -2,22 +2,23 @@ import { NextResponse } from "next/server";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 import connectDB from "@/libs/database";
-import ratelimit from "@/libs/ratelimiter";
+import { limit } from "@/libs/rateLimiter"; // Updated import
 
 
 export async function POST(request){
     try{
         const ip = request.headers.get("x-forwarded-for");
-        const { limit, reset, remaining } = await ratelimit.limit(ip);
-        if (remaining === 0){
+        
+        // Use the new limit function
+        if (!limit(ip, 5, 60_000)) { // 5 requests per minute
             return NextResponse.json(
                 { message: 'Too many requests' }, 
                 { 
                     status: 429 , 
                     headers: {
-                        "X-RateLimit-Limit": limit.toString(),
-                        "X-RateLimit-Remaining": remaining.toString(),
-                        "X-RateLimit-Reset": reset.toString(),
+                        "X-RateLimit-Limit": "5",
+                        "X-RateLimit-Remaining": "0",
+                        "X-RateLimit-Reset": (Date.now() + 60_000).toString(), // Approximate reset time
                     }
                 }
             );
@@ -46,4 +47,3 @@ export async function POST(request){
         )
     }
 }
-
