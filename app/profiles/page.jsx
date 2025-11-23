@@ -18,9 +18,7 @@ export default async function Profiles() {
       <LoadingProvider>
         <div className="container mx-auto p-4">
           <div className="pt-0 md:pt-8">
-            <h1 className="text-4xl dark:text-white font-bold mb-2">
-              Profiles
-            </h1>
+            <h1 className="text-4xl  font-bold mb-2">Profiles</h1>
             <p className="text-gray-700">
               Discover profiles of users who have shared their movie ratings
             </p>

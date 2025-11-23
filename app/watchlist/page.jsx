@@ -47,9 +47,7 @@ export default async function Watchlist() {
       <LoadingProvider>
         <div className="container mx-auto p-4">
           <div className="pt-0 md:pt-8">
-            <h1 className="text-4xl dark:text-white font-bold mb-2">
-              Watchlist
-            </h1>
+            <h1 className="text-4xl  font-bold mb-2">Watchlist</h1>
             <p className="text-gray-700">
               Keep track of the movies you want to watch
             </p>

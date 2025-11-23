@@ -16,7 +16,7 @@ export default async function Home() {
     <div className="grow">
       <div className="container mx-auto p-4">
         <div className="pt-0 md:pt-8">
-          <h1 className="text-4xl font-bold dark:text-white mb-2">Movies</h1>
+          <h1 className="text-4xl font-bold  mb-2">Movies</h1>
           <p className="text-gray-700">Discover and rate your favorite films</p>
         </div>
         <div className="grid py-4 md:py-8 gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
